@@ -31,15 +31,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'life',
-    'pyuploadcare.dj',
-    'django.contrib.gis',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'life',
+    'pyuploadcare.dj',
+    'django.contrib.gis'
 ]
 
 MIDDLEWARE = [
@@ -84,12 +84,11 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'gis',
         'USER': 'tony',
-        'PASSWORD': 'longlife',
+        'PASSWORD': 'p',
         'HOST': 'localhost',
-        'PORT': '1000'
+        'PORT': '5432'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
