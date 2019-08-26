@@ -9,7 +9,7 @@ from djchoices import ChoiceItem, DjangoChoices
 class User(models.Model):
     is_authenticated = True
     username = models.CharField(max_length =50)
-    email = models.CharField(max_length=200)
+    email = models.CharField(max_length=200,default='ads@gmail')
 class Profile(models.Model):
     user = models.OneToOneField(User,max_length=30,null=False,on_delete=models.CASCADE,)
     pic = ImageField(blank=True, manual_crop="")
@@ -29,26 +29,7 @@ class Housing(models.Model):
     ("Bedsitters","bedsitters"),
     ("Single Rooms","single rooms")
 }
-    OPENING_HOURS={
-            ('0400','0400'),
-            ('0500','0500'),
-            ('0600','0600'),
-            ('0700','0700'),
-            ('0800','0800'),
-            ('0900','0900'),
-            ('1000','1000'),
-            ('1100','1100'),
-            ('1200','1200')
-    }
-    CLOSING_HOURS={
-            ('1400','1400'),
-            ('1500','1500'),
-            ('1600','1600'),
-            ('1700','1700'),
-            ('1800','1800'),
-            ('1900','1900'),
-            ('2000','2000')
-    }
+    
     name=models.CharField(max_length=20,null=False)
     image=ImageField(blank=True, manual_crop="")
     image1=ImageField(blank=True, manual_crop="")
@@ -62,8 +43,8 @@ class Housing(models.Model):
     contact=models.IntegerField(null=True,blank=False)
     description=models.TextField(max_length=10000,null=False)
     opening_days=models.CharField(max_length=50,default='monday to friday')
-    opening = models.IntegerField( choices=OPENING_HOURS,default="0800")
-    closing = models.IntegerField( choices=CLOSING_HOURS,default="1800")
+    opening_hours = models.IntegerField(null=False,blank=False)
+    closing_hours = models.IntegerField(null=False,blank=False)
     category=models.CharField(max_length=1000,choices= HOUSE_CATEGORY)
     verified=models.BooleanField(null=False,blank=False)
     ratings = GenericRelation(Rating, related_query_name='housing')
@@ -127,26 +108,6 @@ class Business(models.Model):
     ("Construction Material Hardware","construction material hardware"),
     ("Botique","botique")
 }
-    OPENING_HOURS={
-            ('0400','0400'),
-            ('0500','0500'),
-            ('0600','0600'),
-            ('0700','0700'),
-            ('0800','0800'),
-            ('0900','0900'),
-            ('1000','1000'),
-            ('1100','1100'),
-            ('1200','1200')
-    }
-    CLOSING_HOURS={
-            ('1400','1400'),
-            ('1500','1500'),
-            ('1600','1600'),
-            ('1700','1700'),
-            ('1800','1800'),
-            ('1900','1900'),
-            ('2000','2000')
-    }
     name=models.CharField(max_length=20,null=False)
     location = models.PointField()
     address = models.CharField(max_length=100)
@@ -160,8 +121,8 @@ class Business(models.Model):
     contact=models.IntegerField(null=True,blank=False)
     description=models.TextField(max_length=10000,null=False)
     opening_days=models.CharField(max_length=50,default='monday to friday')
-    opening = models.IntegerField( choices=OPENING_HOURS,default="0800")
-    closing = models.IntegerField( choices=CLOSING_HOURS,default="1800")
+    opening_hours = models.IntegerField(null=False,blank=False)
+    closing_hours = models.IntegerField(null=False,blank=False)
     category=models.CharField(max_length=1000,choices= BUSINESS_CATEGORY)
     verified=models.BooleanField(null=False,blank=False)
     ratings = GenericRelation(Rating, related_query_name='business')
@@ -230,26 +191,6 @@ class Services(models.Model):
     ("YES","yes"),
     ("NO","no")
     }
-    OPENING_HOURS={
-            ('0400','0400'),
-            ('0500','0500'),
-            ('0600','0600'),
-            ('0700','0700'),
-            ('0800','0800'),
-            ('0900','0900'),
-            ('1000','1000'),
-            ('1100','1100'),
-            ('1200','1200')
-    }
-    CLOSING_HOURS={
-            ('1400','1400'),
-            ('1500','1500'),
-            ('1600','1600'),
-            ('1700','1700'),
-            ('1800','1800'),
-            ('1900','1900'),
-            ('2000','2000')
-    }
     name=models.CharField(max_length=20,null=False)
     location = models.PointField()
     address = models.CharField(max_length=100)
@@ -265,8 +206,8 @@ class Services(models.Model):
     description=models.TextField(max_length=10000,null=False)
     contact=models.IntegerField(null=True,blank=False)
     opening_days=models.CharField(max_length=50,default='monday to friday')
-    opening = models.IntegerField( choices=OPENING_HOURS,default="0800")
-    closing = models.IntegerField( choices=CLOSING_HOURS,default="1800")
+    opening_hours = models.IntegerField(null=False,blank=False)
+    closing_hours = models.IntegerField(null=False,blank=False)
     available=models.CharField(max_length=1000,choices= AVAILABLE)
     meeting = models.CharField(max_length=50,blank=False,default="greenhouse")
     verified=models.BooleanField(null=False,blank=False)
