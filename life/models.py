@@ -61,9 +61,9 @@ class Housing(models.Model):
     city = models.CharField(max_length=50)
     contact=models.IntegerField(null=True,blank=False)
     description=models.TextField(max_length=10000,null=False)
-    opening_days=models.CharField(max_length=50)
-    opening = models.IntegerField(max_length=20, choices=OPENING_HOURS,default="0800")
-    closing = models.CharField(max_length=20, choices=CLOSING_HOURS,default="1800")
+    opening_days=models.CharField(max_length=50,default='monday to friday')
+    opening = models.IntegerField( choices=OPENING_HOURS,default="0800")
+    closing = models.IntegerField( choices=CLOSING_HOURS,default="1800")
     category=models.CharField(max_length=1000,choices= HOUSE_CATEGORY)
     verified=models.BooleanField(null=False,blank=False)
     ratings = GenericRelation(Rating, related_query_name='housing')
@@ -159,9 +159,9 @@ class Business(models.Model):
     image5=ImageField(blank=True, manual_crop="")
     contact=models.IntegerField(null=True,blank=False)
     description=models.TextField(max_length=10000,null=False)
-    opening_days=models.CharField(max_length=50)
-    opening = models.IntegerField(max_length=20, choices=OPENING_HOURS,default="0800")
-    closing = models.CharField(max_length=20, choices=CLOSING_HOURS,default="1800")
+    opening_days=models.CharField(max_length=50,default='monday to friday')
+    opening = models.IntegerField( choices=OPENING_HOURS,default="0800")
+    closing = models.IntegerField( choices=CLOSING_HOURS,default="1800")
     category=models.CharField(max_length=1000,choices= BUSINESS_CATEGORY)
     verified=models.BooleanField(null=False,blank=False)
     ratings = GenericRelation(Rating, related_query_name='business')
@@ -185,7 +185,7 @@ class Business(models.Model):
         method to get image by id
         :return:
         """
-        business = cls.objects.filter(id=busines_id)
+        business = cls.objects.filter(id=business_id)
         return business
 
     @classmethod
@@ -264,9 +264,9 @@ class Services(models.Model):
     price =models.IntegerField(null=True,blank=False)
     description=models.TextField(max_length=10000,null=False)
     contact=models.IntegerField(null=True,blank=False)
-    opening_days=models.CharField(max_length=50)
-    opening = models.IntegerField(max_length=20, choices=OPENING_HOURS,default="0800")
-    closing = models.CharField(max_length=20, choices=CLOSING_HOURS,default="1800")
+    opening_days=models.CharField(max_length=50,default='monday to friday')
+    opening = models.IntegerField( choices=OPENING_HOURS,default="0800")
+    closing = models.IntegerField( choices=CLOSING_HOURS,default="1800")
     available=models.CharField(max_length=1000,choices= AVAILABLE)
     meeting = models.CharField(max_length=50,blank=False,default="greenhouse")
     verified=models.BooleanField(null=False,blank=False)
