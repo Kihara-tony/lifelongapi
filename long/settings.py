@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from os import environ
 import datetime
 import django_heroku
 import dj_database_url
@@ -52,6 +53,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
+GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
 
 # Application definition
 
