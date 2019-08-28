@@ -29,7 +29,7 @@ class Housing(models.Model):
     ("Bedsitters","bedsitters"),
     ("Single Rooms","single rooms")
 }
-    
+    owner_id=models.ForeignKey(User,null=True,on_delete=models.CASCADE,)
     name=models.CharField(max_length=20,null=False)
     image=ImageField(blank=True, manual_crop="")
     image1=ImageField(blank=True, manual_crop="")
@@ -108,6 +108,7 @@ class Business(models.Model):
     ("Construction Material Hardware","construction material hardware"),
     ("Botique","botique")
 }
+    owner_id=models.ForeignKey(User,null=True,on_delete=models.CASCADE,)
     name=models.CharField(max_length=20,null=False)
     location = models.PointField()
     address = models.CharField(max_length=100)
@@ -191,6 +192,7 @@ class Services(models.Model):
     ("YES","yes"),
     ("NO","no")
     }
+    owner_id=models.ForeignKey(User,null=True,on_delete=models.CASCADE,)
     name=models.CharField(max_length=20,null=False)
     location = models.PointField()
     address = models.CharField(max_length=100)
