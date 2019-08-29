@@ -70,9 +70,12 @@ INSTALLED_APPS = [
     'star_ratings',
     'pyuploadcare.dj',
     'django.contrib.gis'
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -82,7 +85,18 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
-
+CORS_ORIGIN_WHITELIST = [
+    "https://herokuapp.com",
+    "http://localhost:4200",
+]
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 ROOT_URLCONF = 'long.urls'
 STAR_RATINGS_RERATE = False
 STAR_RATINGS_RANGE = 10
