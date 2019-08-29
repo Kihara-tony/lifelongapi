@@ -69,7 +69,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'star_ratings',
     'pyuploadcare.dj',
-    'django.contrib.gis'
+    'django.contrib.gis',
     'corsheaders',
 ]
 
