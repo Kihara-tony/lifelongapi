@@ -27,9 +27,12 @@ class Housing(models.Model):
     ("Hostels","hostels"),
     ("Rooms","rooms"),
     ("Bedsitters","bedsitters"),
-    ("Single Rooms","single rooms")
+    ("Single Rooms","single rooms"),
+    ("Mansionette","mansionette"),
+    ("Container Houses","container houses")
 }
-    # owner_id=models.ForeignKey(User,null=False,on_delete=models.CASCADE,)
+    id= models.PositiveIntegerField(primary_key=True)
+    owner_name=models.CharField(max_length=30,null=True)
     name=models.CharField(max_length=20,null=False)
     image=ImageField(blank=True, manual_crop="")
     image1=ImageField(blank=True, manual_crop="")
@@ -106,9 +109,10 @@ class Business(models.Model):
     ("Bookshop","bookshop"),
     ("Electric Hardware","electric hardware"),
     ("Construction Material Hardware","construction material hardware"),
-    ("Botique","botique")
+    ("Botique","botique"),
 }
-    # owner_id=models.ForeignKey(User,null=False,on_delete=models.CASCADE,)
+    id= models.PositiveIntegerField(primary_key=True)
+    owner_name=models.CharField(max_length=30,null=True)
     name=models.CharField(max_length=20,null=False)
     location = models.PointField()
     address = models.CharField(max_length=100)
@@ -186,13 +190,27 @@ class Services(models.Model):
     ("Library","library"),
     ("Water point","water point"),
     ("Massage","massage"),
-    ("Kibanda foods","kibanda foods")
+    ("Kibanda foods","kibanda foods"),
+    ("Lawyers","lawyers"),
+    ("T-shirt Printing","T-shirt Printing"),
+    ("Plumber","plumber"),
+    ("Security Guard","security guard"),
+    ("Vehicle Branding","vehicle branding"),
+    ("Swimming Pool maintenance","swimming pool maintenance"),
+    ("Car Tracking","car tracking"),
+    ("Photographer","photographer"),
+    ("Gardener","gardener"),
+    ("Church,Mosque","church,mosque"),
+    ("Fencing service","fencing service"),
+    ("Cyber","cyber"),
+    ("House maid service","house maid service")
 }
     AVAILABLE={
     ("YES","yes"),
     ("NO","no")
     }
-    # owner_id=models.ForeignKey(User,null=False,on_delete=models.CASCADE,)
+    id= models.PositiveIntegerField(primary_key=True)
+    owner_name=models.CharField(max_length=30,null=True)
     name=models.CharField(max_length=20,null=False)
     location = models.PointField()
     address = models.CharField(max_length=100)

@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'multiupload',
     'tinymce',
+    'django_filters',
     'rest_framework',
     'star_ratings',
     'pyuploadcare.dj',

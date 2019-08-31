@@ -10,13 +10,15 @@ from rest_framework.response import Response
 from rest_framework.views import status
 from rest_framework_jwt.settings import api_settings
 from rest_framework import permissions
-
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class ServicesViewSet(viewsets.ModelViewSet):
 
     queryset = Services.objects.all()
     serializer_class = ServicesSerialiser
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id','category','city']
     permission_classes = (permissions.AllowAny,)
 
     
@@ -63,6 +65,8 @@ class BusinessViewSet(viewsets.ModelViewSet):
 
     queryset = Business.objects.all()
     serializer_class = BusinessSerialiser
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id','category','city']
     permission_classes = (permissions.AllowAny,)
     def get(self, request, *args, **kwargs):
         try:
@@ -107,6 +111,8 @@ class HousingViewSet(viewsets.ModelViewSet):
 
     queryset = Housing.objects.all()
     serializer_class = HousingSerialiser
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id','category','city']
     permission_classes = (permissions.AllowAny,)
     def get(self, request, *args, **kwargs):
         try:
