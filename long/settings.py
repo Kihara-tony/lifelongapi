@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'tinymce',
     'django_filters',
     'rest_framework',
+    'rest_framework_gis',
     'star_ratings',
     'pyuploadcare.dj',
     'django.contrib.gis',
