@@ -9,7 +9,9 @@ class BusinessSerialiser(serializers.HyperlinkedModelSerializer):
         model = Business
         geo_field = "location"
         fields = ('id','owner_name','name','location','image','image1','image2','image3','image4','image5','address','city','contact','description','category','verified')
-        
+    def create(self, validated_data):
+        return Business.objects.create(**validated_data)
+
     def update(self, instance, validated_data):
         instance.id = validated_data.get("id",instance.id)
         instance.owner_name = validated_data.get("owner_name",instance.owner_name)
@@ -35,6 +37,8 @@ class ServicesSerialiser(serializers.HyperlinkedModelSerializer):
         model = Services
         geo_field = "location"
         fields = ('id','owner_name','name','location','address','image','image1','image2','image3','image4','image5','city','category','price','description','contact','available','verified')
+    def create(self, validated_data):
+        return Services.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.id = validated_data.get("id",instance.id)
@@ -64,7 +68,9 @@ class HousingSerialiser(serializers.HyperlinkedModelSerializer):
         model = Housing
         geo_field = "location"
         fields = ('id','owner_name','location','name','image','image1','image2','image3','image4','image5','address','city','contact','description','verified')
-        
+    def create(self, validated_data):
+        return Housing.objects.create(**validated_data)
+ 
     def update(self, instance, validated_data):
         instance.id = validated_data.get("id",instance.id)
         instance.owner_name = validated_data.get("owner_name",instance.owner_name)

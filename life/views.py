@@ -36,39 +36,29 @@ class ServicesViewSet(viewsets.ModelViewSet):
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
-    def post(self,request):
-        serializer = ServicesSerialiser(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request):
+        article = request.data.get('article')
 
-    def put(self, request, *args, **kwargs):
-        try:
-            a_request = self.queryset.get(pk=kwargs["pk"])
-            serializer = ServicesSerialiser()
-            updated_request = serializer.update(a_request, request.data)
-            return Response(ServicesSerialiser(updated_request).data)
-        except Services.DoesNotExist:
-            return Response(
-                data={
-                    "message": "Request with id: {} does not exist".format(kwargs["pk"])
-                },
-                status=status.HTTP_404_NOT_FOUND
-            )
+        # Create an article from the above data
+        serializer = ArticleSerializer(data=article)
+        if serializer.is_valid(raise_exception=True):
+            article_saved = serializer.save()
+        return Response({"success": "Article '{}' created successfully".format(article_saved.title)})
+
+
+    def put(self, request, pk):
+        saved_services = get_object_or_404(Services.objects.all(), pk=pk)
+        data = request.data.get('name')
+        serialiser = ServicesSerialiser(instance=saved_services, data=data, partial=True)
+        if serialiser.is_valid(raise_exception=True):
+            service_saved = serialiser.save()
+        return Response({"success": "Service '{}' updated successfully".format(service_saved.name)})
             
-    def delete(self, request, *args, **kwargs):
-        try:
-            a_request = self.queryset.get(pk=kwargs["pk"])
-            a_request.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except Services.DoesNotExist:
-            return Response(
-                data={
-                    "message": "Request with id: {} does not exist".format(kwargs["pk"])
-                },
-                status=status.HTTP_404_NOT_FOUND
-            )
+    def delete(self, request, pk):
+    # Get object with this pk
+        services = get_object_or_404(Services.objects.all(), pk=pk)
+        services.delete()
+        return Response({"message": "Services with id `{}` has been deleted.".format(pk)},status=204)
             
 class BusinessViewSet(viewsets.ModelViewSet):
 
@@ -90,38 +80,28 @@ class BusinessViewSet(viewsets.ModelViewSet):
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
-    def post(self,request):
-        serializer = BusinessSerialiser(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    def put(self, request, *args, **kwargs):
-        try:
-            a_request = self.queryset.get(pk=kwargs["pk"])
-            serializer = BusinessSerialiser()
-            updated_request = serializer.update(a_request, request.data)
-            return Response(BusinessSerialiser(updated_request).data)
-        except Business.DoesNotExist:
-            return Response(
-                data={
-                    "message": "Request with id: {} does not exist".format(kwargs["pk"])
-                },
-                status=status.HTTP_404_NOT_FOUND
-            )
+    def post(self, request):
+        business = request.data.get('name')
+
+        # Create an article from the above data
+        serialiser = BusinessSerialiser(data=name)
+        if serialiser.is_valid(raise_exception=True):
+            business_saved = serialiser.save()
+        return Response({"success": "Business '{}' created successfully".format(business_saved.name)})
+
+    def put(self, request, pk):
+        saved_businesses = get_object_or_404(Business.objects.all(), pk=pk)
+        data = request.data.get('name')
+        serialiser = BusinessSerialiser(instance=saved_businesses, data=data, partial=True)
+        if serialiser.is_valid(raise_exception=True):
+            business_saved = serialiser.save()
+        return Response({"success": "house '{}' updated successfully".format(business_saved.name)})
             
-    def delete(self, request, *args, **kwargs):
-        try:
-            a_request = self.queryset.get(pk=kwargs["pk"])
-            a_request.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except Business.DoesNotExist:
-            return Response(
-                data={
-                    "message": "Request with id: {} does not exist".format(kwargs["pk"])
-                },
-                status=status.HTTP_404_NOT_FOUND
-            )
+    def delete(self, request, pk):
+    # Get object with this pk
+        business = get_object_or_404(Business.objects.all(), pk=pk)
+        business.delete()
+        return Response({"message": "Business with id `{}` has been deleted.".format(pk)},status=204)
             
 class HousingViewSet(viewsets.ModelViewSet):
 
@@ -143,38 +123,30 @@ class HousingViewSet(viewsets.ModelViewSet):
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
-    def post(self,request):
-        serializer = HousingSerialiser(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    def put(self, request, *args, **kwargs):
-        try:
-            a_request = self.queryset.get(pk=kwargs["pk"])
-            serializer = HousingSerialiser()
-            updated_request = serializer.update(a_request, request.data)
-            return Response(HousingSerialiser(updated_request).data)
-        except Housing.DoesNotExist:
-            return Response(
-                data={
-                    "message": "Request with id: {} does not exist".format(kwargs["pk"])
-                },
-                status=status.HTTP_404_NOT_FOUND
-            )
+    def post(self, request):
+        house = request.data.get('name')
+        # Create an article from the above data
+        serialiser = HousingSerialiser(data=name)
+        if serialiser.is_valid(raise_exception=True):
+            house_saved = serialiser.save()
+        return Response({"success": "House '{}' created successfully".format(house_saved.name)})
+
+    
+    def put(self, request, pk):
+        saved_houses = get_object_or_404(Housing.objects.all(), pk=pk)
+        data = request.data.get('name')
+        serialiser = HousingSerialiser(instance=saved_houses, data=data, partial=True)
+        if serialiser.is_valid(raise_exception=True):
+            house_saved = serialiser.save()
+        return Response({"success": "house '{}' updated successfully".format(house_saved.name)})
+
             
-    def delete(self, request, *args, **kwargs):
-        try:
-            a_request = self.queryset.get(pk=kwargs["pk"])
-            a_request.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        except Housing.DoesNotExist:
-            return Response(
-                data={
-                    "message": "Request with id: {} does not exist".format(kwargs["pk"])
-                },
-                status=status.HTTP_404_NOT_FOUND
-            )
+    def delete(self, request, pk):
+    # Get object with this pk
+        house = get_object_or_404(Housing.objects.all(), pk=pk)
+        house.delete()
+        return Response({"message": "House with id `{}` has been deleted.".format(pk)},status=204)
+
             
 def business(request):
     business=Business.objects.all()
