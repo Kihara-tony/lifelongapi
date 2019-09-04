@@ -23,7 +23,7 @@ urlpatterns=[
     
 # To help in posting updating and deleting of data
 
-    url('services/(?P<pk>\d+)/', ServicesViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
-    url('business/(?P<pk>\d+)/', BusinessViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
-    url('housing/(?P<pk>\d+)/', HousingViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
+    url('services/<int:pk>', ServicesViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
+    url('business/<int:pk>', BusinessViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
+    url('housing/<int:pk>', HousingViewSet.as_view({'get': 'retrieve', 'put': 'update', 'patch': 'partial_update', 'delete': 'destroy'})),
 ]
