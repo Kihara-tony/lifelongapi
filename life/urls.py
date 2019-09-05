@@ -7,7 +7,7 @@ from .views import ServicesViewSet,BusinessViewSet,HousingViewSet
 urlpatterns=[
     url('^$',views.housing,name = 'housing'),
     url(r'^services/', views.services, name='services'),
-    url(r'business/',views.business,name='business'),
+    url(r'^business/',views.business,name='business'),
 
 # To add data
 
