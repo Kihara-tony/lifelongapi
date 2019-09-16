@@ -63,11 +63,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'life',
+    'leaflet',
     'bootstrap3',
     'multiupload',
     'tinymce',
     'django_filters',
     'rest_framework',
+    # 'rest_framework.authtoken', 
     'rest_framework_gis',
     'star_ratings',
     'pyuploadcare.dj',
@@ -92,10 +94,10 @@ CORS_ALLOW_CREDENTIALS= True
 
 ROOT_URLCONF = 'long.urls'
 STAR_RATINGS_RERATE = False
-STAR_RATINGS_RANGE = 10
+STAR_RATINGS_RANGE = 5
 STAR_RATINGS_ANONYMOUS = True
-STAR_RATINGS_STAR_HEIGHT = 20
-STAR_RATINGS_STAR_WIDTH = 20
+STAR_RATINGS_STAR_HEIGHT = 10
+STAR_RATINGS_STAR_WIDTH = 10
 
 TEMPLATES = [
     {

@@ -1,4 +1,6 @@
 from django.db import models
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 from pyuploadcare.dj.models import ImageField
@@ -6,17 +8,33 @@ from django.contrib.contenttypes.fields import GenericRelation
 from star_ratings.models import Rating
 from djchoices import ChoiceItem, DjangoChoices
 # Create your models here.
+
 class User(models.Model):
     is_authenticated = True
     username = models.CharField(max_length =50)
-    email = models.CharField(max_length=200,default='ads@gmail')
+    useremail = models.CharField(max_length = 140)
+    userpassword = models.CharField(max_length = 100)
+    last_login = models.DateField(auto_now=True)
+    profilepic = models.CharField(max_length = 225, default = "")
+
+
 class Profile(models.Model):
-    user = models.OneToOneField(User,max_length=30,null=False,on_delete=models.CASCADE,)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     pic = ImageField(blank=True, manual_crop="")
     bio = models.CharField(default="Hi!", max_length = 30)
-    def save_user(self):
-        self.save()
-        
+    
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
+    
+    @classmethod
+    def search_user(cls,name):
+        return User.objects.filter(username__icontains = name)
 class Housing(models.Model):
     HOUSE_CATEGORY={
     ("Flats and Apartments","flats and apartments"),
@@ -31,8 +49,8 @@ class Housing(models.Model):
     ("Mansionette","mansionette"),
     ("Container Houses","container houses")
 }
-    id= models.PositiveIntegerField(primary_key=True)
-    owner_name=models.CharField(max_length=30,null=True)
+    
+    owner_name=models.CharField(max_length=30,null=False)
     name=models.CharField(max_length=20,null=False)
     image=ImageField(blank=True, manual_crop="")
     image1=ImageField(blank=True, manual_crop="")
@@ -40,7 +58,8 @@ class Housing(models.Model):
     image3=ImageField(blank=True, manual_crop="")
     image4=ImageField(blank=True, manual_crop="")
     image5=ImageField(blank=True, manual_crop="")
-    location = models.PointField(blank=True,null=True)
+    location = models.PointField()
+    
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     contact=models.IntegerField(null=True,blank=False)
@@ -51,7 +70,7 @@ class Housing(models.Model):
     category=models.CharField(max_length=1000,choices=HOUSE_CATEGORY)
     verified=models.BooleanField(null=False,blank=False)
     ratings = GenericRelation(Rating, related_query_name='housing')
-    # Housing.objects.filter(ratings__isnull=False).order_by('ratings__average')
+
     
     
     def __str__(self):
@@ -98,6 +117,7 @@ class Housing(models.Model):
         """
         housing = cls.objects.filter(housing__name__icontains=search_term)
         return housing
+# Housing.objects.filter(ratings__isnull=False).order_by('ratings__average')
 
 class Business(models.Model):
     BUSINESS_CATEGORY={
@@ -111,10 +131,11 @@ class Business(models.Model):
     ("Construction Material Hardware","construction material hardware"),
     ("Botique","botique"),
 }
-    id= models.PositiveIntegerField(primary_key=True)
-    owner_name=models.CharField(max_length=30,null=True)
+    
+    owner_name=models.CharField(max_length=30,null=False)
     name=models.CharField(max_length=20,null=False)
-    location = models.PointField(blank=True,null=True)
+    location = models.PointField()
+    
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     image=ImageField(blank=True, manual_crop="")
@@ -131,10 +152,7 @@ class Business(models.Model):
     category=models.CharField(max_length=1000,choices= BUSINESS_CATEGORY)
     verified=models.BooleanField(null=False,blank=False)
     ratings = GenericRelation(Rating, related_query_name='business')
-    
-    # Business.objects.filter(ratings__isnull=False).order_by('ratings__average')
-    
-    
+
     def __str__(self):
         return self.name
 
@@ -179,6 +197,7 @@ class Business(models.Model):
         """
         business = cls.objects.filter(biz__name__icontains=search_term)
         return business
+# Business.objects.filter(ratings__isnull=False).order_by('ratings__average')
 
 class Services(models.Model):
     SERVICE_CATEGORY={
@@ -203,16 +222,17 @@ class Services(models.Model):
     ("Church,Mosque","church,mosque"),
     ("Fencing service","fencing service"),
     ("Cyber","cyber"),
-    ("House maid service","house maid service")
+    ("House maid service","house maid service"),
+    ("Electrician","Electrician")
 }
     AVAILABLE={
     ("YES","yes"),
     ("NO","no")
     }
-    id= models.PositiveIntegerField(primary_key=True)
-    owner_name=models.CharField(max_length=30,null=True)
+    owner_name=models.CharField(max_length=30,null=False)
     name=models.CharField(max_length=20,null=False)
-    location = models.PointField(blank=True,null=True)
+    location = models.PointField()
+    
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     image=ImageField(blank=True, manual_crop="")
@@ -232,7 +252,7 @@ class Services(models.Model):
     meeting = models.CharField(max_length=50,blank=False,default="greenhouse")
     verified=models.BooleanField(null=False,blank=False)
     ratings = GenericRelation(Rating, related_query_name='service')
-    
+
     
     def __str__(self):
         return self.name
@@ -278,6 +298,7 @@ class Services(models.Model):
         """
         services = cls.objects.filter(service__name__icontains=search_term)
         return services
+# Services.objects.filter(ratings__isnull=False).order_by('ratings__average')
 
 class Comments(models.Model):
     comment = models.CharField(max_length=10000, null=True)

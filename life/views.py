@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import status
 from rest_framework_jwt.settings import api_settings
 from rest_framework import permissions
+# from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 # from rest_framework_gis.filters import Filter
 from rest_framework_gis.filters import InBBoxFilter
@@ -22,7 +23,7 @@ class ServicesViewSet(viewsets.ModelViewSet):
     bbox_filter_field = 'location'
     bbox_filter_include_overlapping = True
     filterset_fields = ['id','category','city']
-    permission_classes = (permissions.AllowAny,)
+    # permission_classes = (IsAuthenticated) 
 
     
     def get(self, request, *args, **kwargs):
@@ -40,7 +41,7 @@ class ServicesViewSet(viewsets.ModelViewSet):
         article = request.data.get('article')
 
         # Create an article from the above data
-        serializer = ArticleSerializer(data=article)
+        serializer = ServicesSerialiser(data=article)
         if serializer.is_valid(raise_exception=True):
             article_saved = serializer.save()
         return Response({"success": "Article '{}' created successfully".format(article_saved.title)})
@@ -68,7 +69,7 @@ class BusinessViewSet(viewsets.ModelViewSet):
     bbox_filter_field = 'location'
     bbox_filter_include_overlapping = True
     filterset_fields = ['id','category','city']
-    permission_classes = (permissions.AllowAny,)
+    # permission_classes = (IsAuthenticated) 
     def get(self, request, *args, **kwargs):
         try:
             a_request = self.queryset.get(pk=kwargs["pk"])
@@ -111,7 +112,7 @@ class HousingViewSet(viewsets.ModelViewSet):
     bbox_filter_field = 'location'
     bbox_filter_include_overlapping = True
     filterset_fields = ['id','category','city']
-    permission_classes = (permissions.AllowAny,)
+    # permission_classes = (IsAuthenticated) 
     def get(self, request, *args, **kwargs):
         try:
             a_request = self.queryset.get(pk=kwargs["pk"])
@@ -157,8 +158,8 @@ def addbusiness(request):
         form = BusinessForm(request.POST, request.FILES)
         if form.is_valid():
             n = form.save(commit=False)
-            n.admin = request.user.profile
-            request.user.profile.save()
+            n.admin = request.user
+            request.user.save()
             n.save()
         return redirect('business')
     else:
@@ -174,8 +175,8 @@ def addhousing(request):
         form = HousingForm(request.POST, request.FILES)
         if form.is_valid():
             n = form.save(commit=False)
-            n.admin = request.user.profile
-            request.user.profile.save()
+            n.admin = request.user
+            request.user.save()
             n.save()
         return redirect('housing')
     else:
@@ -191,8 +192,8 @@ def addservices(request):
         form = ServicesForm(request.POST, request.FILES)
         if form.is_valid():
             n = form.save(commit=False)
-            n.admin = request.user.profile
-            request.user.profile.save()
+            n.admin = request.user
+            request.user.save()
             n.save()
         return redirect('services')
     else:

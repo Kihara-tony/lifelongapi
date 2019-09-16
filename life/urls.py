@@ -2,13 +2,15 @@ from django.conf.urls import url,include
 from . import views
 from django.conf.urls.static import static
 from django.conf import settings
+from rest_framework.authtoken.views import obtain_auth_token
 from .views import ServicesViewSet,BusinessViewSet,HousingViewSet
 
 urlpatterns=[
     url('^$',views.housing,name = 'housing'),
     url(r'^services/', views.services, name='services'),
     url(r'^business/',views.business,name='business'),
-
+    # url('api-token-auth/', obtain_auth_token, name='api_token_auth'),
+    # url('rest-auth/', include('rest_auth.urls')),
 # To add data
 
     url(r'addhousing/',views.addhousing,name = 'addhousing'),

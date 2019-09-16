@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url('api-token-auth/', obtain_jwt_token, name='create-token'),
     url('^api/v1|v2/', include('life.urls')),
+    url(r'^ratings/', include('star_ratings.urls', namespace='ratings')),
     url('', include('life.urls')),
 ]

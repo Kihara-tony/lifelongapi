@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Services,Business,Housing
+from .models import Services,Business,Housing,User
 from django.contrib.gis.db import models
 import django_filters
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
@@ -97,7 +97,7 @@ class TokenSerializer(serializers.Serializer):
     """
     token = serializers.CharField(max_length=255)
     
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ("username", "email")
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("username", "email")
