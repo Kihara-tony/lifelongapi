@@ -63,20 +63,25 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'life',
+    'hitcount',
     'leaflet',
     'bootstrap3',
     'multiupload',
     'tinymce',
     'django_filters',
     'rest_framework',
-    # 'rest_framework.authtoken', 
+    'rest_framework.authtoken',
     'rest_framework_gis',
     'star_ratings',
     'pyuploadcare.dj',
     'django.contrib.gis',
     'corsheaders',
 ]
-
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -119,17 +124,7 @@ UPLOADCARE = {
     'secret': '9159265f9cea41b69bb9',
 }
 WSGI_APPLICATION = 'long.wsgi.application'
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'long',
-        'USER': 'tony',
-        'PASSWORD':'p',
-    }
-}
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -147,21 +142,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    )
-}
-# JWT settings
-JWT_AUTH = {
-    'JWT_ALLOW_REFRESH': True,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
-}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

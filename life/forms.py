@@ -35,7 +35,7 @@ class BusinessForm(forms.ModelForm):
         forms.OSMWidget(attrs = {'map_width': 1024, 'map_height': 600}))
     class Meta:
         model = Business
-        fields = ['id','owner_name','name','location','address','image','image1','image2','image3','image4','image5','opening','closing','city','contact','description','category','verified']
+        fields = ['id','name','owner_name','national_id','phone','email','postal_address','status','opening_days','opening','closing','address','country','county','city','town','village','location','description','company','image','image1','image2','image3','image4','image5','category','verified']
 
 
 class ServicesForm(forms.ModelForm):
@@ -46,7 +46,7 @@ class ServicesForm(forms.ModelForm):
         forms.OSMWidget(attrs = {'map_width': 1024, 'map_height': 600}))
     class Meta:
         model = Services
-        fields = ['id','owner_name','name','location','address','image','image1','image2','image3','image4','image5','city','opening','closing','category','price','description','contact','available','verified']
+        fields = ['id','name','owner_name','national_id','phone','email','postal_address','status','opening_days','opening','closing','address','country','county','city','town','village','location','description','company','image','image1','image2','image3','image4','image5','category','price','available','meeting_point','verified']
 
 
 class HousingForm(forms.ModelForm):
@@ -57,7 +57,7 @@ class HousingForm(forms.ModelForm):
         forms.OSMWidget(attrs = {'map_width': 1024, 'map_height': 600}))
     class Meta:
         model = Housing
-        fields = ['id','owner_name','name','image','image1','image2','image3','image4','image5','opening','closing','location','address','city','contact','description','verified']
+        fields = ['id','name','owner_name','national_id','phone','email','postal_address','status','opening_days','opening','closing','address','country','county','city','town','village','location','description','company','image','image1','image2','image3','image4','image5','size','firnished','unfirnished','amenities','price','mode_of_payment','category','verified']
 
 
 class CommentForm(forms.ModelForm):
